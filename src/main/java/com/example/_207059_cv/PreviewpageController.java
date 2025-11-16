@@ -2,19 +2,33 @@ package com.example._207059_cv;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 public class PreviewpageController {
 
-    @FXML private Label fullNameLabel, emailLabel, phoneLabel, addressLabel;
-    @FXML private Label summaryLabel, skillsLabel, educationLabel, experienceLabel;
+    @FXML private Label fullNameLabel;
+    @FXML private Label emailLabel;
+    @FXML private Label phoneLabel;
+    @FXML private Label addressLabel;
 
-    public void setCVData(Getter_Setter cvData) {
-        fullNameLabel.setText("Full Name: " + cvData.getFullName());
-        emailLabel.setText("Email: " + cvData.getEmail());
-        phoneLabel.setText("Phone: " + cvData.getPhone());
-        addressLabel.setText("Address: " + cvData.getAddress());
-        skillsLabel.setText(cvData.getSkills());
-        educationLabel.setText(cvData.getEducation());
-        experienceLabel.setText(cvData.getExperience());
+    @FXML private Label skillsLabel;
+    @FXML private Label educationLabel;
+    @FXML private Label experienceLabel;
+
+    @FXML private ImageView photoView;
+
+    public void setCVData(Getter_Setter data) {
+        fullNameLabel.setText(data.getFullName());
+        emailLabel.setText(data.getEmail());
+        phoneLabel.setText(data.getPhone());
+        addressLabel.setText(data.getAddress());
+
+        skillsLabel.setText(data.getSkills());
+        educationLabel.setText(data.getEducation());
+        experienceLabel.setText(data.getExperience());
+
+        if (data.getApplicantPhoto() != null) {
+            photoView.setImage(data.getApplicantPhoto());
+        }
     }
 }
