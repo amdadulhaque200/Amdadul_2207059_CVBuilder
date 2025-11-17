@@ -4,19 +4,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.io.IOException;
 
 public class CVApplication extends Application {
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/_207059_cv/Homepage.fxml"));
-        Scene scene = new Scene(loader.load(), 600, 400);
-        stage.setTitle("CV Builder");
+    @Override  public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(CVApplication.class.getResource("Homepage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 900, 650);
+        stage.setTitle("CVBuilder APK!");
         stage.setScene(scene);
         stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }

@@ -1,8 +1,11 @@
 package com.example._207059_cv;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 public class PreviewpageController {
 
@@ -17,7 +20,12 @@ public class PreviewpageController {
 
     @FXML private ImageView photoView;
 
+    private Getter_Setter cvData;
+
     public void setCVData(Getter_Setter data) {
+
+        this.cvData = data;
+
         fullNameLabel.setText(data.getFullName());
         emailLabel.setText(data.getEmail());
         phoneLabel.setText(data.getPhone());
@@ -29,6 +37,33 @@ public class PreviewpageController {
 
         if (data.getApplicantPhoto() != null) {
             photoView.setImage(data.getApplicantPhoto());
+        }
+    }
+
+    @FXML
+    private void onOKClick() {
+        Stage stage = (Stage) fullNameLabel.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void onEditCVClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/_207059_cv/Form.fxml")
+            );
+            Scene formScene = new Scene(loader.load(), 600, 750);
+
+            FormController controller = loader.getController();
+            controller.fillFormWithExistingData(cvData);
+
+            Stage stage = (Stage) fullNameLabel.getScene().getWindow();
+            stage.setScene(formScene);
+            stage.setTitle("Edit CV");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

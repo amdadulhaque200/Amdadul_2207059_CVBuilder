@@ -44,5 +44,17 @@
 
     <Label text="Experience:" style="-fx-font-weight: bold;"/>
     <Label fx:id="experienceLabel" wrapText="true"/>
+    <Separator/>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button fx:id="editButton" text="Edit"
+                onAction="#onEditCVClick"
+                style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 16px;"/>
+
+        <Button fx:id="okButton" text="OK"
+                onAction="#onOKClick"
+                style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 16px;"/>
+    </HBox>
+
 
 </VBox>

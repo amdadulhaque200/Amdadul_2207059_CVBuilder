@@ -83,4 +83,23 @@ public class FormController {
             e.printStackTrace();
         }
     }
+    @FXML
+    public void fillFormWithExistingData(Getter_Setter data) {
+
+        fullNameField.setText(data.getFullName());
+        emailField.setText(data.getEmail());
+        phoneField.setText(data.getPhone());
+        addressField.setText(data.getAddress());
+
+        summaryField.setText(data.getSummary());
+        skillsField.setText(data.getSkills());
+        educationField.setText(data.getEducation());
+        experienceField.setText(data.getExperience());
+
+        if (data.getApplicantPhoto() != null) {
+            uploadedImage = data.getApplicantPhoto();
+        }
+    }
+
+
 }
