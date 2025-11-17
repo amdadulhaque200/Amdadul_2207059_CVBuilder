@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -26,8 +27,11 @@ public class FormController {
 
     @FXML private Button uploadPhotoButton;
     @FXML private Button generateButton;
+    @FXML private Label photoPathLabel;
+
 
     private Image uploadedImage;
+    private File selectedPhoto;
 
     @FXML
     protected void onUploadPhotoClick() {
@@ -41,9 +45,15 @@ public class FormController {
             File file = fileChooser.showOpenDialog(uploadPhotoButton.getScene().getWindow());
 
             if (file != null) {
+                selectedPhoto = file;
                 uploadedImage = new Image(file.toURI().toString());
+
+                if (photoPathLabel != null) {
+                    photoPathLabel.setText(file.getName());
+                }
+
                 System.out.println("Photo selected: " + file.getName());
-            } else {
+            }  else {
                 System.out.println("No photo selected.");
             }
         } catch (Exception e) {
@@ -98,6 +108,9 @@ public class FormController {
 
         if (data.getApplicantPhoto() != null) {
             uploadedImage = data.getApplicantPhoto();
+            if (photoPathLabel != null) {
+                photoPathLabel.setText("Photo loaded");
+            }
         }
     }
 
