@@ -70,7 +70,7 @@ public class FormController {
             data.setEmail(emailField.getText());
             data.setPhone(phoneField.getText());
             data.setAddress(addressField.getText());
-            data.setSummary(summaryField.getText());
+            //data.setSummary(summaryField.getText());
             data.setSkills(skillsField.getText());
             data.setEducation(educationField.getText());
             data.setExperience(experienceField.getText());
@@ -101,7 +101,6 @@ public class FormController {
         phoneField.setText(data.getPhone());
         addressField.setText(data.getAddress());
 
-        summaryField.setText(data.getSummary());
         skillsField.setText(data.getSkills());
         educationField.setText(data.getEducation());
         experienceField.setText(data.getExperience());

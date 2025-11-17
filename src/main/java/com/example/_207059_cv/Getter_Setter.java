@@ -8,7 +8,6 @@ public class Getter_Setter {
     private String email;
     private String phone;
     private String address;
-    private String summary;
     private String skills;
     private String education;
     private String experience;
@@ -25,7 +24,6 @@ public class Getter_Setter {
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.summary = summary;
         this.skills = skills;
         this.education = education;
         this.experience = experience;
@@ -36,7 +34,6 @@ public class Getter_Setter {
     public String getEmail() { return email; }
     public String getPhone() { return phone; }
     public String getAddress() { return address; }
-    public String getSummary() { return summary; }
     public String getSkills() { return skills; }
     public String getEducation() { return education; }
     public String getExperience() { return experience; }
@@ -46,7 +43,6 @@ public class Getter_Setter {
     public void setEmail(String email) { this.email = email; }
     public void setPhone(String phone) { this.phone = phone; }
     public void setAddress(String address) { this.address = address; }
-    public void setSummary(String summary) { this.summary = summary; }
     public void setSkills(String skills) { this.skills = skills; }
     public void setEducation(String education) { this.education = education; }
     public void setExperience(String experience) { this.experience = experience; }

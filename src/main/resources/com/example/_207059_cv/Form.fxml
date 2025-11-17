@@ -21,7 +21,7 @@
         <TextField fx:id="phoneField" promptText="Phone" />
         <TextField fx:id="addressField" promptText="Address" />
 
-        <TextArea fx:id="summaryField" prefRowCount="3" promptText="Professional Summary" wrapText="true" />
+
         <TextArea fx:id="skillsField" prefRowCount="3" promptText="Skills" wrapText="true" />
         <TextArea fx:id="educationField" prefRowCount="4" promptText="Education" wrapText="true" />
         <TextArea fx:id="experienceField" prefRowCount="4" promptText="Experience" wrapText="true" />
