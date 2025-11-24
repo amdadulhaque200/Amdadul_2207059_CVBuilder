@@ -21,4 +21,31 @@ public class HomepageController {
         stage.setScene(scene);
         stage.show();
     }
+    @FXML
+    protected void onPreviewCVClick() {
+        try {
+            Databasehandler db = Databasehandler.getInstance();
+            Getter_Setter cvData = db.getCV(1);
+
+            if (cvData != null) {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/example/_207059_cv/Previewpage.fxml")
+                );
+                Scene scene = new Scene(loader.load(), 600, 700);
+
+                PreviewpageController controller = loader.getController();
+                controller.setCVData(cvData);
+                controller.setCVId(1);
+
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setTitle("CV Preview");
+                stage.show();
+            } else {
+                System.out.println("CV not found!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

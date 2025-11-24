@@ -65,8 +65,12 @@ public class PreviewpageController {
     private void onSaveClick() {
         try {
             Databasehandler db = Databasehandler.getInstance();
-
-            boolean success = db.insertCV(cvData);
+            boolean success;
+            if (cvId == -1) {
+                success = db.insertCV(cvData);
+            } else {
+                success = db.updateCV(cvId, cvData);
+            }
 
             if (success) {
                 System.out.println("CV saved successfully!");
