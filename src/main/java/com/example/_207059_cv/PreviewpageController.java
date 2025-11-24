@@ -21,6 +21,7 @@ public class PreviewpageController {
     @FXML private ImageView photoView;
 
     private Getter_Setter cvData;
+    private int cvId = -1;
 
     public void setCVData(Getter_Setter data) {
 
@@ -41,18 +42,12 @@ public class PreviewpageController {
     }
 
     @FXML
-    private void onOKClick() {
-        Stage stage = (Stage) fullNameLabel.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
     private void onEditCVClick() {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/_207059_cv/Form.fxml")
             );
-            Scene formScene = new Scene(loader.load(), 600, 750);
+            Scene formScene = new Scene(loader.load(), 900, 650);
 
             FormController controller = loader.getController();
             controller.fillFormWithExistingData(cvData);
@@ -66,4 +61,27 @@ public class PreviewpageController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void onSaveClick() {
+        try {
+            Databasehandler db = Databasehandler.getInstance();
+
+            boolean success = db.insertCV(cvData);
+
+            if (success) {
+                System.out.println("CV saved successfully!");
+            } else {
+                System.out.println("Failed to save CV.");
+            }
+            Stage stage = (Stage) fullNameLabel.getScene().getWindow();
+            stage.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void setCVId(int id) {
+        this.cvId = id;
+    }
+
 }

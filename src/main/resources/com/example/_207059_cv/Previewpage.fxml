@@ -9,7 +9,7 @@
       spacing="20" prefWidth="600" prefHeight="700"
       style="-fx-background-color: #f7f7f7; -fx-padding: 20;">
 
-    <Label text="CV Preview" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+    <Label text="Preview CV" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
     <Separator/>
 
     <!-- Top area: Left = details, Right = photo -->
@@ -51,8 +51,8 @@
                 onAction="#onEditCVClick"
                 style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 16px;"/>
 
-        <Button fx:id="okButton" text="OK"
-                onAction="#onOKClick"
+        <Button fx:id="saveButton" text="Save"
+                onAction="#onSaveClick"
                 style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 16px;"/>
     </HBox>
 
