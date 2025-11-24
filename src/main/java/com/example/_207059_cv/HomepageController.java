@@ -4,11 +4,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class HomepageController {
 
     @FXML private Label welcomeText;
+
+    @FXML private TextField searchNameField;
 
     @FXML
     protected void onCreateCVClick() throws Exception {
@@ -24,8 +27,13 @@ public class HomepageController {
     @FXML
     protected void onPreviewCVClick() {
         try {
+            String name = searchNameField.getText().trim();
+            if (name.isEmpty()) {
+                System.out.println("Please enter a name!");
+                return;
+            }
             Databasehandler db = Databasehandler.getInstance();
-            Getter_Setter cvData = db.getCV(1);
+            Getter_Setter cvData = db.getCVByName(name);
 
             if (cvData != null) {
                 FXMLLoader loader = new FXMLLoader(
@@ -35,7 +43,7 @@ public class HomepageController {
 
                 PreviewpageController controller = loader.getController();
                 controller.setCVData(cvData);
-                controller.setCVId(1);
+                controller.setCVId(-1);
 
                 Stage stage = new Stage();
                 stage.setScene(scene);

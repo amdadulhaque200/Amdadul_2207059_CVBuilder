@@ -12,10 +12,9 @@
     <Label text="Preview CV" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
     <Separator/>
 
-    <!-- Top area: Left = details, Right = photo -->
     <HBox spacing="20" alignment="TOP_LEFT">
 
-        <!-- Left side details -->
+
         <VBox spacing="8" HBox.hgrow="ALWAYS">
             <Label fx:id="fullNameLabel" text="Full Name"
                    style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
@@ -25,7 +24,6 @@
             <Label fx:id="addressLabel" text="Address"/>
         </VBox>
 
-        <!-- Right side photo -->
         <ImageView fx:id="photoView"
                    fitWidth="140" fitHeight="160"
                    preserveRatio="true"

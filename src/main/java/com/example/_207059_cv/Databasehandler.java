@@ -86,7 +86,6 @@ public class Databasehandler {
                 cv.setEducation(rs.getString("education"));
                 cv.setExperience(rs.getString("experience"));
 
-                // Load image from path
                 String path = rs.getString("photoPath");
                 if (path != null && !path.isEmpty()) {
                     File file = new File(path);
@@ -133,4 +132,39 @@ public class Databasehandler {
             return false;
         }
     }
+    public Getter_Setter getCVByName(String fullName) {
+        String sql = "SELECT * FROM cv WHERE fullName = ? LIMIT 1";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, fullName);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Getter_Setter cv = new Getter_Setter();
+                cv.setFullName(rs.getString("fullName"));
+                cv.setEmail(rs.getString("email"));
+                cv.setPhone(rs.getString("phone"));
+                cv.setAddress(rs.getString("address"));
+                cv.setSkills(rs.getString("skills"));
+                cv.setEducation(rs.getString("education"));
+                cv.setExperience(rs.getString("experience"));
+
+                String path = rs.getString("photoPath");
+                if (path != null && !path.isEmpty()) {
+                    File file = new File(path);
+                    if (file.exists()) {
+                        cv.setApplicantPhoto(new Image(file.toURI().toString()));
+                    }
+                }
+
+                return cv;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

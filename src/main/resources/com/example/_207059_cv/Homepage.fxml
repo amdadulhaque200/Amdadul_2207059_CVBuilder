@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" prefHeight="400" prefWidth="600" spacing="25" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example._207059_cv.HomepageController">
@@ -12,6 +13,8 @@
     <Label fx:id="welcomeText" style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Make Your CV" />
 
     <Button onAction="#onCreateCVClick" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 16px;" text="Create New CV" />
+
+    <TextField fx:id="searchNameField" promptText="Enter full name to search" />
 
     <Button onAction="#onPreviewCVClick" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 16px;" text="Preview CV" />
 
