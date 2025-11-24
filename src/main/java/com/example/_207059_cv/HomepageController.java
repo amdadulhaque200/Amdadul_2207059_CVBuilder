@@ -29,6 +29,7 @@ public class HomepageController {
             }
         });
     }
+
     private void showSuggestions(String text) {
         Databasehandler db = Databasehandler.getInstance();
         List<String> matches = db.getNamesStartingWith(text);
@@ -83,7 +84,7 @@ public class HomepageController {
 
                 PreviewpageController controller = loader.getController();
                 controller.setCVData(cvData);
-                controller.setCVId(-1);
+
 
                 Stage stage = new Stage();
                 stage.setScene(scene);

@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 
 public class Getter_Setter {
 
+    private int id;
+
     private String fullName;
     private String email;
     private String phone;
@@ -19,7 +21,6 @@ public class Getter_Setter {
     public Getter_Setter(String fullName, String email, String phone, String address,
                          String summary, String skills, String education, String experience,
                          Image applicantPhoto) {
-
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
@@ -29,6 +30,8 @@ public class Getter_Setter {
         this.experience = experience;
         this.applicantPhoto = applicantPhoto;
     }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     public String getFullName() { return fullName; }
     public String getEmail() { return email; }

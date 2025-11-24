@@ -26,7 +26,7 @@ public class Databasehandler {
     private void createTable() {
         String TABLE_CV = "CREATE TABLE IF NOT EXISTS cv (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "fullName TEXT," +
+                "fullName TEXT UNIQUE," +
                 "email TEXT," +
                 "phone TEXT," +
                 "address TEXT," +
@@ -45,6 +45,11 @@ public class Databasehandler {
     }
 
     public boolean insertCV(Getter_Setter cv) {
+        Getter_Setter existing = getCVByName(cv.getFullName());
+        if (existing != null) {
+            cv.setId(existing.getId());
+            return updateCV(existing.getId(), cv);
+        }
         String sql = "INSERT INTO cv(fullName,email,phone,address,skills,education,experience,photoPath) " +
                 "VALUES(?,?,?,?,?,?,?,?)";
 
@@ -64,12 +69,22 @@ public class Databasehandler {
             }
             pstmt.setString(8, path);
 
-            return pstmt.executeUpdate() > 0;
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                ResultSet keys = pstmt.getGeneratedKeys();
+                if (keys.next()) {
+                    cv.setId(keys.getInt(1));
+                }
+                return true;
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+
         }
+        return false;
+
+
     }
     public Getter_Setter getCV(int id) {
         String sql = "SELECT * FROM cv WHERE id=?";
@@ -81,6 +96,7 @@ public class Databasehandler {
 
             if (rs.next()) {
                 Getter_Setter cv = new Getter_Setter();
+                cv.setId(rs.getInt("id"));  // important: track the CV's ID
                 cv.setFullName(rs.getString("fullName"));
                 cv.setEmail(rs.getString("email"));
                 cv.setPhone(rs.getString("phone"));
@@ -135,6 +151,7 @@ public class Databasehandler {
             return false;
         }
     }
+
     public Getter_Setter getCVByName(String fullName) {
         String sql = "SELECT * FROM cv WHERE fullName = ? LIMIT 1";
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -145,6 +162,7 @@ public class Databasehandler {
 
             if (rs.next()) {
                 Getter_Setter cv = new Getter_Setter();
+                cv.setId(rs.getInt("id"));
                 cv.setFullName(rs.getString("fullName"));
                 cv.setEmail(rs.getString("email"));
                 cv.setPhone(rs.getString("phone"));
@@ -171,7 +189,7 @@ public class Databasehandler {
     }
     public List<String> getNamesByPartial(String partial) {
         List<String> result = new ArrayList<>();
-        String sql = "SELECT fullName FROM cv WHERE fullName LIKE ?";
+        String sql = "SELECT DISTINCT fullName FROM cv WHERE fullName LIKE ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -191,6 +209,8 @@ public class Databasehandler {
     public List<String> getNamesStartingWith(String prefix) {
         return getNamesByPartial(prefix);
     }
+
+
 
 
 }

@@ -21,7 +21,6 @@ public class PreviewpageController {
     @FXML private ImageView photoView;
 
     private Getter_Setter cvData;
-    private int cvId = -1;
 
     public void setCVData(Getter_Setter data) {
 
@@ -66,14 +65,18 @@ public class PreviewpageController {
         try {
             Databasehandler db = Databasehandler.getInstance();
             boolean success;
-            if (cvId == -1) {
-                success = db.insertCV(cvData);
+            if (cvData.getId() > 0) {
+                success = db.updateCV(cvData.getId(), cvData);
             } else {
-                success = db.updateCV(cvId, cvData);
+                success = db.insertCV(cvData);
             }
 
             if (success) {
                 System.out.println("CV saved successfully!");
+                if (cvData.getId() > 0) {
+
+                    cvData = db.getCV(cvData.getId());
+                }
             } else {
                 System.out.println("Failed to save CV.");
             }
@@ -84,8 +87,6 @@ public class PreviewpageController {
             e.printStackTrace();
         }
     }
-    public void setCVId(int id) {
-        this.cvId = id;
-    }
+
 
 }
