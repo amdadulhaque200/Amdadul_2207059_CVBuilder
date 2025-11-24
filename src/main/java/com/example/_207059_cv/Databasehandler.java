@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 import java.io.File;
 import java.sql.*;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Databasehandler {
 
     private static final String DB_URL = "jdbc:sqlite:cv_data.db";
@@ -166,5 +169,28 @@ public class Databasehandler {
         }
         return null;
     }
+    public List<String> getNamesByPartial(String partial) {
+        List<String> result = new ArrayList<>();
+        String sql = "SELECT fullName FROM cv WHERE fullName LIKE ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + partial + "%");
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                result.add(rs.getString("fullName"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+    public List<String> getNamesStartingWith(String prefix) {
+        return getNamesByPartial(prefix);
+    }
+
 
 }
