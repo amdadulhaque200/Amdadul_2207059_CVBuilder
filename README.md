@@ -8,6 +8,9 @@ com.example._207059_cv
 │
 ├─ Homepage.fxml            
 ├─ Form.fxml                 
-├─ Previewpage.fxml           
+├─ Previewpage.fxml  
+├─ Databasehandler.java
+
+
 
 
