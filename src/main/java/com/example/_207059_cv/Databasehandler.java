@@ -1,6 +1,12 @@
 package com.example._207059_cv;
 
 import javafx.scene.image.Image;
+import javafx.embed.swing.SwingFXUtils;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
 
 import java.io.File;
 import java.sql.*;
@@ -33,7 +39,7 @@ public class Databasehandler {
                 "skills TEXT," +
                 "education TEXT," +
                 "experience TEXT," +
-                "photoPath TEXT" +
+                "photo BLOB" +
                 ");";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -43,6 +49,17 @@ public class Databasehandler {
             e.printStackTrace();
         }
     }
+    private byte[] imageToBytes(Image image) {
+        try {
+            BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+            ByteArrayOutputStream s = new ByteArrayOutputStream();
+            ImageIO.write(bImage, "png", s);
+            return s.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public boolean insertCV(Getter_Setter cv) {
         Getter_Setter existing = getCVByName(cv.getFullName());
@@ -50,7 +67,7 @@ public class Databasehandler {
             cv.setId(existing.getId());
             return updateCV(existing.getId(), cv);
         }
-        String sql = "INSERT INTO cv(fullName,email,phone,address,skills,education,experience,photoPath) " +
+        String sql = "INSERT INTO cv(fullName,email,phone,address,skills,education,experience,photo) " +
                 "VALUES(?,?,?,?,?,?,?,?)";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -63,11 +80,11 @@ public class Databasehandler {
             pstmt.setString(5, cv.getSkills());
             pstmt.setString(6, cv.getEducation());
             pstmt.setString(7, cv.getExperience());
-            String path = null;
+            byte[] photoBytes = null;
             if (cv.getApplicantPhoto() != null) {
-                path = cv.getApplicantPhoto().getUrl().replace("file:", "");
+                photoBytes = imageToBytes(cv.getApplicantPhoto());
             }
-            pstmt.setString(8, path);
+            pstmt.setBytes(8, photoBytes);
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
@@ -105,12 +122,9 @@ public class Databasehandler {
                 cv.setEducation(rs.getString("education"));
                 cv.setExperience(rs.getString("experience"));
 
-                String path = rs.getString("photoPath");
-                if (path != null && !path.isEmpty()) {
-                    File file = new File(path);
-                    if (file.exists()) {
-                        cv.setApplicantPhoto(new Image(file.toURI().toString()));
-                    }
+                byte[] photoBytes = rs.getBytes("photo");
+                if (photoBytes != null) {
+                    cv.setApplicantPhoto(new Image(new ByteArrayInputStream(photoBytes)));
                 }
 
                 return cv;
@@ -136,11 +150,11 @@ public class Databasehandler {
             pstmt.setString(6, cv.getEducation());
             pstmt.setString(7, cv.getExperience());
 
-            String path = null;
+            byte[] photoBytes = null;
             if (cv.getApplicantPhoto() != null) {
-                path = cv.getApplicantPhoto().getUrl().replace("file:", "");
+                photoBytes = imageToBytes(cv.getApplicantPhoto());
             }
-            pstmt.setString(8, path);
+            pstmt.setBytes(8, photoBytes);
 
             pstmt.setInt(9, id);
 
@@ -171,12 +185,9 @@ public class Databasehandler {
                 cv.setEducation(rs.getString("education"));
                 cv.setExperience(rs.getString("experience"));
 
-                String path = rs.getString("photoPath");
-                if (path != null && !path.isEmpty()) {
-                    File file = new File(path);
-                    if (file.exists()) {
-                        cv.setApplicantPhoto(new Image(file.toURI().toString()));
-                    }
+                byte[] photoBytes = rs.getBytes("photo");
+                if (photoBytes != null) {
+                    cv.setApplicantPhoto(new Image(new ByteArrayInputStream(photoBytes)));
                 }
 
                 return cv;
